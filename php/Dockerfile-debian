@@ -30,7 +30,7 @@ RUN rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 ENV COMPOSER_ALLOW_SUPERUSER=1 \
     PHP_USER_ID=33 \
     PHP_ENABLE_XDEBUG=0 \
-    PATH=/app:/app/vendor/bin:/root/.composer/vendor/bin:$PATH \
+    PATH=/code:/code/app:/code/app/vendor/bin:/root/.composer/vendor/bin:$PATH \
     TERM=linux
 
 # Add configuration files
@@ -60,4 +60,7 @@ RUN mkdir /etc/bash_completion.d && \
          -o /etc/bash_completion.d/yii
 
 # Application environment
-WORKDIR /app
+WORKDIR /code/app
+
+
+
