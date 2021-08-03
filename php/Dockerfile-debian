@@ -59,8 +59,23 @@ RUN mkdir /etc/bash_completion.d && \
     curl -L https://raw.githubusercontent.com/yiisoft/yii2/master/contrib/completion/bash/yii \
          -o /etc/bash_completion.d/yii
 
+
+
 # Application environment
+ARG SERVER_USER="www-data"
+
+ARG DEV_USER="dev-user"
+ARG UID=1000
+ARG GID=1000
+
+RUN groupadd -g ${GID} ${DEV_USER}
+RUN useradd -s /bin/bash -M -r -u ${UID} -g ${GID} ${DEV_USER}
+RUN gpasswd -a ${SERVER_USER} ${DEV_USER}
+
+COPY . /code
+RUN chown -Rf ${DEV_USER}:${DEV_USER} /code
 WORKDIR /code/app
 
+RUN composer --no-ansi --no-progress install || true
 
 
